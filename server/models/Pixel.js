@@ -1,6 +1,8 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
+
 const PixelSchema = new mongoose.Schema({
     direction:{type:String},
     pixels:{type:Number}
 },{timestamps:true})
-export default mongoose.model('Pixel', PixelSchema)
+
+module.exports = mongoose.model('Pixel', PixelSchema)

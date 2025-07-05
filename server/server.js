@@ -1,12 +1,13 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import Dinner from './models/Dinner.js'
-import Pixel from './models/Pixel.js'
+const express = require('express') 
+const mongoose = require('mongoose') 
+const Dinner = require('./models/Dinner.js') 
+const Pixel = require('./models/Pixel.js') 
+const {cloudinary} = require('./utils/cloudinary.js') 
+
 const app = express()
-const PORT = process.env.PORT || 9991
-app.listen(PORT, ()=> console.log(`Server Running on Port: ${PORT}`))
 app.use(express.static('../dist'))
-app.use(express.json());
+app.use(express.json({limit:'50mb'}))
+app.use(express.urlencoded({limit:'50mb',extended:true}));
 
 // MUST HAVE A SEMICOLON ON THE LINE BEFORE AN IIFE
 (async()=>{
@@ -17,6 +18,18 @@ app.use(express.json());
         console.log(err)
     }
 })()
+app.post('/api/upload-cloudinary', async(req,res)=>{
+    try{
+        console.log(req.body.data)
+        const fileStr = req.body.data
+        const cloudinaryResponse = await cloudinary.uploader.upload(req.body.data)
+        console.log(cloudinaryResponse)
+        res.json('Image File Uploaded to Cloudinary')
+    }catch(err){
+        console.log(err)
+        res.status(500).json({err:'Something Went Wrong'})
+    }
+})
 app.post('/api/dinner', async(req,res)=>{
     try{
         const maxSequence = await Dinner.findOne({section:req.body.section}).sort({sequence:-1})
@@ -175,3 +188,6 @@ app.put('/api/whitespace/vertical', async(req,res)=>{
         console.log(err)
     }
 })
+
+const PORT = process.env.PORT || 9991
+app.listen(PORT, ()=> console.log(`Server Running on Port: ${PORT}`))

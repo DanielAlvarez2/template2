@@ -6,14 +6,25 @@ import { FaSquareCaretUp } from "react-icons/fa6"
 import { MdClear } from "react-icons/md"
 import { BsFillArchiveFill } from "react-icons/bs"
 import { PiArrowFatUpFill } from "react-icons/pi"
+import { FaCamera } from "react-icons/fa"
 
 export default function App(){
   const [editMode, setEditMode] = useState(true)
   const [editForm, setEditForm] = useState(false)
   const [dinnerItems, setDinnerItems] = useState([])
   const [hiddenID, setHiddenID] = useState('')
+  const [previewSource, setPreviewSource] = useState('')
+  const [base64EncodedImage, setBase64EncodedImage] = useState('')
   const [submitText, setSubmitText] = useState(<FaPlusCircle />)
   
+  function handleFileInputChange(e){
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(file) // converts binary image file to a string
+    reader.onloadend = ()=> setPreviewSource(reader.result)
+    console.log(previewSource)
+  }
+
   function flipSwitch(){
     setEditMode(!editMode)
     if(editMode){
@@ -60,7 +71,15 @@ export default function App(){
   useEffect(()=>getWhitespace(),[])
 
   async function addDinnerItem(formData){
+    console.log(previewSource)
+    await fetch('/api/upload-cloudinary', { method:'POST',
+                                            body:JSON.stringify({data:previewSource}),
+                                            headers:{'Content-type':'application/json'}
+    })
+      .then(console.log('Image Uploaded to Cloudinary'))
+      .catch(err=>console.log(err))
     console.log(...formData)
+    setPreviewSource('')
     await fetch('/api/dinner',{ method:'POST',
                                 headers:{'Content-Type':'application/json'},
                                 body: JSON.stringify({
@@ -551,7 +570,22 @@ export default function App(){
   </div>{/* dinner-menu */}
  
 
+
+
+
+
+
+
+
+
+{/* form */}
  
+
+
+
+
+
+
  <div className='edit-controls'>
   <div id='dinner-menu-form-wrapper'>
   <form action={editForm?updateDinnerItem:addDinnerItem} id='dinner-menu-form'>
@@ -601,9 +635,21 @@ export default function App(){
         <label>
           Price:<br/>
           <input id='price' name='price' placeholder='Price' type='text' autoComplete='off' />
-        </label><br/><br/>
+        </label><br/><br/><br/>
 
-                
+        <label>
+          <div style={{display:'flex',gap:'5px'}}><FaCamera /><span>Image/Photo: (optional)</span></div>
+          <input  type='file'
+                  name='imageBinary'
+                  id='image-binary'
+                  onChange={handleFileInputChange} />
+        </label><br/><br/>
+        <input type='hidden' name='base64EncodedImage' value={previewSource} />
+
+        {previewSource && <img src={previewSource}
+                              alt='Image File Upload Preview'
+                              style={{height:'300px'}} />}
+
         <div id='buttons-wrapper'>
         <button type='submit' 
                 style={editForm ? {background:'blue',color:'white'} : 
@@ -621,6 +667,23 @@ export default function App(){
         </div>{/* #buttons-wrapper */}
       </form>
       </div>{/* dinner-menu-form-wrapper */}
+
+
+
+
+
+
+
+{/* form */}
+
+
+
+
+
+
+{/* archives */}
+
+
 
       {Boolean(Object.keys(dinnerItems.filter(item=>item.sequence == 0)).length) && 
         <>

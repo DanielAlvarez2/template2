@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+const mongoose =require('mongoose')
+
 const DinnerSchema = new mongoose.Schema({
     section:{type:String},
     name:{type:String},
@@ -8,4 +9,5 @@ const DinnerSchema = new mongoose.Schema({
     price:{type:String},
     sequence:{type:Number}
 },{timestamps:true})
-export default mongoose.model('Dinner', DinnerSchema)
+
+module.exports = mongoose.model('Dinner', DinnerSchema)

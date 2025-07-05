@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start":"cd server && node server.js",
+    "start": "cd server && node server.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "express": "^5.1.0",
     "mongoose": "^8.15.1",
     "react": "^19.1.0",
