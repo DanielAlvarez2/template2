@@ -1,0 +1,277 @@
+@font-face{
+  font-family: 'FuturaLight';
+  src:url('./assets/fonts/FuturaLight.otf') format(opentype);
+}
+@media print{
+  .no-print{
+      display:none !important;
+      height:0;
+      width:0;
+  }
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: serif;
+}
+body{
+  background:lightgrey;
+}
+button{
+  color:white;
+}
+h1{
+  width:50px;
+  z-index: 11;
+  font-size: 55px;
+  font-weight: 100;
+  font-family: FuturaLight;
+  position: relative;
+  left:22px;
+  bottom:4px;
+  letter-spacing: 1px;
+}
+.dinner-menu{
+  background:white;
+  padding: 20px 40px;
+  width:8.5in;
+  height: auto;
+  /* border:1px solid red; */
+  /* background-image: url('/olea-scan-dinner.jpg'); */
+  background-size: 8.5in 14in;
+  background-repeat: no-repeat;
+}
+hr{
+  position: relative;
+  bottom: 7px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom:1px solid #888;
+  height:1px;
+}
+.item,
+.sides-heading{
+  padding:0px 0px;
+  letter-spacing: -0.3px;
+}
+.item{
+  position: relative;
+}
+.appetizers,
+.entrees{
+  flex:1;
+}
+.sides-heading{
+  font-family: FuturaLight;
+  padding-top: 10px;
+}
+.sides .item{
+  width:50%;
+}
+.appetizersEntrees{
+  display:flex;
+}
+.sides{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.name{
+  font-family: FuturaLight;
+  font-weight: 900;
+  font-size: 18px;
+}
+.pre-description{
+  font-style: italic;
+}
+.pre-description,
+.description{
+  font-family:serif;
+  font-size:15px;
+  letter-spacing: 0.1px;
+}
+.price{
+  font-family: serif;
+  font-weight: 900;
+  font-size: 14px;
+}
+.menu-controls{
+  width:8in;
+  overflow: hidden;
+  z-index:10;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width:8.5in;
+  justify-content: center;
+  gap:2px;
+  position: fixed;
+  background: white;
+}
+.whitespace-controls,
+.toggle-mode{
+  font-family: sans-serif;
+  font-weight: 100;
+  display:none;
+  align-items: center;
+}
+.caret{
+  cursor:pointer;
+}
+.horizontal-controls{
+  display:inline-flex;
+}
+.vertical-controls{
+  display:inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.toggle-mode{
+  display:flex;
+  align-items: center;
+  gap:10px;
+}
+.toggle-icon{
+  font-size:30px;
+  cursor:pointer;
+}
+.allergies{
+  font-family: serif;
+  font-size:14px;
+}
+.dinner-menu-footer{
+  display:flex;
+  justify-content: space-between;
+}
+.legal-info{
+  font-family: serif;
+  font-size:12px;
+  width:55%;
+}
+.chef{
+  padding-left: 10px;
+  font-family: FuturaLight;
+  font-weight: 700;
+}
+.dinner-menu-footer{
+  padding-top: 14px;
+}
+.meats,
+.sides,
+.chefs-tasting-menu{
+  font-size:14px;
+  border: 1px solid #888;
+}
+.chefs-tasting-menu{
+  font-family:serif;
+}
+#dinner-menu-form-wrapper{
+  width:8.5in;
+  text-align: center;
+  /* border:1px solid red; */
+}
+form h2{
+  text-align: center;
+  font-size:18px;
+}
+input[type='text']{
+  width:35ch;
+}
+textarea{
+  width:100%;
+}
+form{
+  /* border:1px solid green; */
+  display:inline-block;
+  text-align: left;
+  margin:20px 0 5vh;
+}
+button{
+  cursor:pointer;
+  width:92px;
+  height:30px;
+  border-radius: 15px;
+  border:1px solid black;
+}
+button span{
+  font-size: 13px;
+}
+#clear-button{
+  background:grey;
+  color:black;
+}
+#buttons-wrapper{
+  text-align: center;
+  margin: 15px 0;
+}
+.button-flexbox{
+  display:flex;
+  width:100%;
+  justify-content: center;
+  gap:5px;
+}
+footer{
+  width:8.5in;
+  text-align: center;
+  font-size: 10px;
+  font-family: sans-serif;
+  padding-top:30px;
+  padding-bottom: 5px;
+  margin-top:auto;
+  
+}
+.trash-button,
+.edit-button,
+.archive-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:5px;
+  font-size: 17px;
+}
+.archive-button{
+  background:yellow;
+  color:black;
+}
+.trash-button{
+  background: red;
+  color:white;
+}
+.edit-button{
+  background: rgb(0, 178, 0);
+  color:black;
+}
+.move-up,
+.move-down{
+  text-align: center;
+}
+.move-down{
+  transform: rotate(180deg)
+}
+.move-right{
+  position: absolute;
+  height:100%;
+  right:0;
+}
+.move-left{
+  position:absolute;
+  height:100%;
+  left:0;
+  transform:rotate(180deg);
+}
+.archives{
+  width:8.5in;
+}
+.archives h2{
+  text-align: center;
+}
+.archives .item{
+  width:50%;
+  margin:0 auto;
+}
+.wrapper{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
