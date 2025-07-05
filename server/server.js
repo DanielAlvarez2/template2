@@ -53,6 +53,15 @@ app.post('/api/dinner', async(req,res)=>{
 app.delete('/api/dinner/:id',async(req,res)=>{
     try{
         const target = await Dinner.findById(req.params.id)
+        if (target.cloudinary_public_id) {
+            cloudinary.uploader.destroy(target.cloudinary_public_id,(err,result)=>{
+                if(err){
+                    console.log(err)
+                }else{
+                    console.log(result)
+                }
+            })
+        }
         const section = await Dinner.find({section:target.section})
         section.forEach(async(item)=> {
             item.sequence > target.sequence && await Dinner.findByIdAndUpdate({_id:item._id},{sequence:item.sequence - 1})

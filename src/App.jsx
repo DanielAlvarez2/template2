@@ -7,6 +7,7 @@ import { MdClear } from "react-icons/md"
 import { BsFillArchiveFill } from "react-icons/bs"
 import { PiArrowFatUpFill } from "react-icons/pi"
 import { FaCamera } from "react-icons/fa"
+import { FaWindowClose } from "react-icons/fa"
 
 export default function App(){
   const [editMode, setEditMode] = useState(true)
@@ -74,21 +75,23 @@ export default function App(){
     let cloudinary_url = ''
     let cloudinary_public_id = ''
     console.log(previewSource)
-    await fetch('/api/upload-cloudinary', { method:'POST',
-                                            body:JSON.stringify({data:previewSource}),
-                                            headers:{'Content-type':'application/json'}
-    })
-      .then(async(res)=>await res.json())
-      .then(async(json)=>{
-        await console.log(json)
-        console.log('SECURE_URL: '+json.secure_url)
-        console.log('PUBLIC_ID: '+json.public_id)
-        cloudinary_url = json.secure_url
-        cloudinary_public_id = json.public_id
+    if (previewSource){
+      await fetch('/api/upload-cloudinary', { method:'POST',
+        body:JSON.stringify({data:previewSource}),
+        headers:{'Content-type':'application/json'}
       })
-      .catch(err=>console.log(err))
-    console.log(...formData)
-    setPreviewSource('')
+          .then(async(res)=>await res.json())
+          .then(async(json)=>{
+          await console.log(json)
+          console.log('SECURE_URL: '+json.secure_url)
+          console.log('PUBLIC_ID: '+json.public_id)
+          cloudinary_url = json.secure_url
+          cloudinary_public_id = json.public_id
+          })
+          .catch(err=>console.log(err))
+      console.log(...formData)
+      setPreviewSource('')
+    }
     await fetch('/api/dinner',{ method:'POST',
                                 headers:{'Content-Type':'application/json'},
                                 body: JSON.stringify({
@@ -217,7 +220,12 @@ export default function App(){
     .then(()=>getDinnerItems())
     .catch(err=>console.log(err))
   }
-
+  function showPic(cloudinary_public_id){
+    document.querySelector(`#${cloudinary_public_id}`).style.display = 'block'
+  }
+  function hidePic(cloudinary_public_id){
+    document.querySelector(`#${cloudinary_public_id}`).style.display = 'none'
+  }
 
 
 
@@ -297,9 +305,25 @@ export default function App(){
                                 style={{cursor:'pointer'}} />
             </div>{/* .move-up */}</>}
             
+            {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            style={{display:'none',position:'relative'}}>
+                                        <img  src={data.cloudinary_url} 
+                                              width='100%' />
+                                        <FaWindowClose  onClick={()=>hidePic(data.cloudinary_public_id)}
+                                                        style={{position:'absolute',
+                                                                color:'grey',
+                                                                fontSize:'30px',
+                                                                top:'5px',
+                                                                left:'5px',
+                                                                cursor:'pointer',
+                                                                }}
+                                                    
+                                        />
+                                      </div></>}
+            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
             <span className='name'>{data.name}</span>
             {data.name == 'jamón ibérico' ? '' : data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
-            
             
             {data.preDescription ? <span className='pre-description'>{data.preDescription}; </span> : ''}
             {data.description ? <span className='description'>{data.description}</span> : '' }
@@ -360,6 +384,25 @@ export default function App(){
               <PiArrowFatUpFill onClick={()=>moveUp(data._id)} 
                                 style={{cursor:'pointer'}} />
             </div>{/* .move-up */}</>}
+
+            {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            style={{display:'none',position:'relative'}}>
+                                        <img  src={data.cloudinary_url} 
+                                              width='100%' />
+                                        <FaWindowClose  onClick={()=>hidePic(data.cloudinary_public_id)}
+                                                        style={{position:'absolute',
+                                                                color:'grey',
+                                                                fontSize:'30px',
+                                                                top:'5px',
+                                                                left:'5px',
+                                                                cursor:'pointer',
+                                                                }}
+                                                    
+                                        />
+                                      </div></>}
+            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+
             <span className='name'>{data.name}</span>
             {data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
             {data.preDescription ? <span className='pre-description'>{data.preDescription}; </span> : ''}
@@ -419,6 +462,25 @@ export default function App(){
               <PiArrowFatUpFill onClick={()=>moveUp(data._id)}
                                 style={{cursor:'pointer'}} />
             </div>{/* .move-up */}</>}
+
+            {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            style={{display:'none',position:'relative'}}>
+                                        <img  src={data.cloudinary_url} 
+                                              width='100%' />
+                                        <FaWindowClose  onClick={()=>hidePic(data.cloudinary_public_id)}
+                                                        style={{position:'absolute',
+                                                                color:'grey',
+                                                                fontSize:'30px',
+                                                                top:'5px',
+                                                                left:'5px',
+                                                                cursor:'pointer',
+                                                                }}
+                                                    
+                                        />
+                                      </div></>}
+            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+
             <span className='name'>{data.name}</span>
             {data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
             {data.preDescription ? <span className='pre-description'>{data.preDescription}; </span> : ''}
@@ -524,6 +586,25 @@ export default function App(){
                 </div>{/* .move-right */}
               </div>{/* .edit-controls */}
             </>}
+  
+            {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            style={{display:'none',position:'relative'}}>
+                                        <img  src={data.cloudinary_url} 
+                                              width='100%' />
+                                        <FaWindowClose  onClick={()=>hidePic(data.cloudinary_public_id)}
+                                                        style={{position:'absolute',
+                                                                color:'grey',
+                                                                fontSize:'30px',
+                                                                top:'5px',
+                                                                left:'5px',
+                                                                cursor:'pointer',
+                                                                }}
+                                                    
+                                        />
+                                      </div></>}
+            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+
             <span className='name'>{data.name}</span>
             {data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
             {data.preDescription ? <span className='pre-description'>{data.preDescription}; </span> : ''}
@@ -566,6 +647,15 @@ export default function App(){
       })}
 
   </div>{/* .sides */}
+
+
+
+
+
+
+
+
+
   <div className='dinner-menu-footer'>
       <div className='chef'>manuel romero, chef</div>
       <div><img src='/QR1.png' width='70px' /></div>
