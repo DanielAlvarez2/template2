@@ -71,12 +71,21 @@ export default function App(){
   useEffect(()=>getWhitespace(),[])
 
   async function addDinnerItem(formData){
+    let cloudinary_url = ''
+    let cloudinary_public_id = ''
     console.log(previewSource)
     await fetch('/api/upload-cloudinary', { method:'POST',
                                             body:JSON.stringify({data:previewSource}),
                                             headers:{'Content-type':'application/json'}
     })
-      .then(console.log('Image Uploaded to Cloudinary'))
+      .then(async(res)=>await res.json())
+      .then(async(json)=>{
+        await console.log(json)
+        console.log('SECURE_URL: '+json.secure_url)
+        console.log('PUBLIC_ID: '+json.public_id)
+        cloudinary_url = json.secure_url
+        cloudinary_public_id = json.public_id
+      })
       .catch(err=>console.log(err))
     console.log(...formData)
     setPreviewSource('')
@@ -89,6 +98,8 @@ export default function App(){
                                   preDescription: formData.get('preDescription'),
                                   description: formData.get('description'),
                                   price: formData.get('price'),
+                                  cloudinary_url:cloudinary_url,
+                                  cloudinary_public_id:cloudinary_public_id
                                 })
     })
       .then(console.log('Added to Database'))

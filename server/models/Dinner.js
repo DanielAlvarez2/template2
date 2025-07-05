@@ -7,7 +7,9 @@ const DinnerSchema = new mongoose.Schema({
     preDescription:{type:String},
     description:{type:String},
     price:{type:String},
-    sequence:{type:Number}
+    sequence:{type:Number},
+    cloudinary_url:{type:String},
+    cloudinary_public_id:{type:String}
 },{timestamps:true})
 
 module.exports = mongoose.model('Dinner', DinnerSchema)
