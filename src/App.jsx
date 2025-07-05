@@ -38,6 +38,7 @@ export default function App(){
       document.querySelectorAll('.edit-controls').forEach(item=>item.style.display = 'block')
       document.querySelector('.dinner-menu').style.height = 'auto'
       document.querySelector('.whitespace-controls').style.display = 'none'
+      document.querySelectorAll('.food-pic').forEach(item=>item.style.display = 'none')
     }
   }
   const getDinnerItems = ()=>{
@@ -245,6 +246,16 @@ export default function App(){
   const lastEntree = dinnerItems.filter(item=>(item.section == 'entrees' && item.sequence > 0)).length
   const lastSide = dinnerItems.filter(item=>(item.section == 'sides' && item.sequence > 0)).length
 
+
+
+
+
+
+
+
+
+
+
   return(
     <>
     <div className='wrapper'>
@@ -306,6 +317,7 @@ export default function App(){
             </div>{/* .move-up */}</>}
             
             {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            className='edit-controls food-pic'
                                             style={{display:'none',position:'relative'}}>
                                         <img  src={data.cloudinary_url} 
                                               width='100%' />
@@ -320,8 +332,10 @@ export default function App(){
                                                     
                                         />
                                       </div></>}
-            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
-                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+            {data.cloudinary_url && <div className='edit-controls'>
+                                      <FaCamera style={{cursor:'pointer'}}
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/>
+                                    </div> }
             <span className='name'>{data.name}</span>
             {data.name == 'jamón ibérico' ? '' : data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
             
@@ -386,6 +400,7 @@ export default function App(){
             </div>{/* .move-up */}</>}
 
             {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            className='edit-controls food-pic'
                                             style={{display:'none',position:'relative'}}>
                                         <img  src={data.cloudinary_url} 
                                               width='100%' />
@@ -400,8 +415,10 @@ export default function App(){
                                                     
                                         />
                                       </div></>}
-            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
-                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+            {data.cloudinary_url && <div className='edit-controls'>
+                                      <FaCamera style={{cursor:'pointer'}}
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/>
+                                    </div> }
 
             <span className='name'>{data.name}</span>
             {data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
@@ -464,6 +481,7 @@ export default function App(){
             </div>{/* .move-up */}</>}
 
             {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            className='edit-controls food-pic'
                                             style={{display:'none',position:'relative'}}>
                                         <img  src={data.cloudinary_url} 
                                               width='100%' />
@@ -478,8 +496,10 @@ export default function App(){
                                                     
                                         />
                                       </div></>}
-            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
-                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+            {data.cloudinary_url && <div className='edit-controls'>
+                                      <FaCamera style={{cursor:'pointer'}}
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/>
+                                    </div> }
 
             <span className='name'>{data.name}</span>
             {data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
@@ -588,6 +608,7 @@ export default function App(){
             </>}
   
             {data.cloudinary_url && <><div  id={data.cloudinary_public_id}
+                                            className='edit-controls food-pic'
                                             style={{display:'none',position:'relative'}}>
                                         <img  src={data.cloudinary_url} 
                                               width='100%' />
@@ -602,8 +623,10 @@ export default function App(){
                                                     
                                         />
                                       </div></>}
-            {data.cloudinary_url && <><FaCamera style={{cursor:'pointer'}} 
-                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/></> }
+            {data.cloudinary_url && <div className='edit-controls'>
+                                      <FaCamera style={{cursor:'pointer'}}
+                                                onClick={()=>showPic(data.cloudinary_public_id)} /><br/>
+                                    </div> }
 
             <span className='name'>{data.name}</span>
             {data.allergies ? <><span className='allergies'> ({data.allergies})</span><br/></> : <br/>}
