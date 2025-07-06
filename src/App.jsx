@@ -8,10 +8,12 @@ import { BsFillArchiveFill } from "react-icons/bs"
 import { PiArrowFatUpFill } from "react-icons/pi"
 import { FaCamera } from "react-icons/fa"
 import { FaWindowClose } from "react-icons/fa"
+import { FaImage } from "react-icons/fa6"
 
 export default function App(){
   const [editMode, setEditMode] = useState(true)
   const [editForm, setEditForm] = useState(false)
+  const [editItemPhoto, setEditItemPhoto] = useState('')
   const [dinnerItems, setDinnerItems] = useState([])
   const [hiddenID, setHiddenID] = useState('')
   const [previewSource, setPreviewSource] = useState('')
@@ -52,6 +54,8 @@ export default function App(){
       .then(console.log(`Deleted from Database`))
       .then(()=>getDinnerItems())
       .catch(err=>console.log(err))
+    clearForm()
+    setEditForm(false)
   }
   
   const [marginVertical, setMarginVertical] = useState(0)
@@ -128,7 +132,7 @@ export default function App(){
       .catch(err=>console.log(err))
   }
 
-  function updateForm(id,section,name,allergies,preDescription,description,price){
+  function updateForm(id,section,name,allergies,preDescription,description,price,cloudinary_url){
     setHiddenID(id)
     document.querySelector('#section').value = section
     document.querySelector('#name').value = name
@@ -136,6 +140,9 @@ export default function App(){
     document.querySelector('#pre-description').value = preDescription
     document.querySelector('#description').value = description
     document.querySelector('#price').value = price
+    if(cloudinary_url) {
+      setEditItemPhoto(cloudinary_url)
+    }
     setEditForm(true)
     document.querySelector('#dinner-menu-form').scrollIntoView({behavior:'smooth'})
   }
@@ -355,7 +362,9 @@ export default function App(){
                                               data.allergies,
                                               data.preDescription,
                                               data.description,
-                                              data.price)}>
+                                              data.price,
+                                              data.cloudinary_url,
+                                              data.cloudinary_public_id)}>
                 <i  className='fa-solid fa-pen'></i>
                 <span>Edit</span>                
                 </button>
@@ -436,7 +445,9 @@ export default function App(){
                                               data.allergies,
                                               data.preDescription,
                                               data.description,
-                                              data.price)}>
+                                              data.price,
+                                              data.cloudinary_url,
+                                              data.cloudinary_public_id)}>
                 <i  className='fa-solid fa-pen'></i>
                 <span>Edit</span>                
                 </button>
@@ -518,7 +529,9 @@ export default function App(){
                                               data.allergies,
                                               data.preDescription,
                                               data.description,
-                                              data.price)}>
+                                              data.price,
+                                              data.cloudinary_url,
+                                              data.cloudinary_public_id)}>
                 <i  className='fa-solid fa-pen'></i>
                 <span>Edit</span>                
                 </button>
@@ -644,7 +657,9 @@ export default function App(){
                                               data.allergies,
                                               data.preDescription,
                                               data.description,
-                                              data.price)}>
+                                              data.price,
+                                              data.cloudinary_url,
+                                              data.cloudinary_public_id)}>
                 <i  className='fa-solid fa-pen'></i>
                 <span>Edit</span>                
                 </button>
@@ -761,13 +776,36 @@ export default function App(){
           <input id='price' name='price' placeholder='Price' type='text' autoComplete='off' />
         </label><br/><br/><br/>
 
+
+        {(editForm && editItemPhoto) && <>
+                                          Current/Saved Image:<br/>
+                                          <img  src={editItemPhoto} 
+                                                height='300px' />
+                                        </>} 
+        {(editForm && !editItemPhoto) &&  <>
+                                            <div style={{ display:'flex',
+                                                          gap:'5px',
+                                                          alignItems:'center'}}>
+                                              <span>No Photo Saved: </span><FaImage />
+                                            </div><br/><br/>
+                                          </>}                                    
+
         <label>
-          <div style={{display:'flex',gap:'5px'}}><FaCamera /><span>Image/Photo: (optional)</span></div>
+          <div style={{display:'flex',gap:'5px'}}>
+            <FaCamera />
+            <span>
+              {(editForm && editItemPhoto) && 'CHANGE '}
+              {(editForm && !editItemPhoto) && 'ADD '}
+              Photo: (optional)
+            </span>
+          </div>
           <input  type='file'
                   name='imageBinary'
                   id='image-binary'
                   onChange={handleFileInputChange} />
         </label><br/><br/>
+
+
         <input type='hidden' name='base64EncodedImage' value={previewSource} />
 
         {previewSource && <img src={previewSource}
@@ -844,7 +882,9 @@ export default function App(){
                                               data.allergies,
                                               data.preDescription,
                                               data.description,
-                                              data.price)}>
+                                              data.price,
+                                              data.cloudinary_url,
+                                              data.cloudinary_public_id)}>
                 <i  className='fa-solid fa-pen'></i>
                 <span>Edit</span>                
                 </button>
