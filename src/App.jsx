@@ -19,6 +19,8 @@ export default function App(){
   const [previewSource, setPreviewSource] = useState('')
   const [base64EncodedImage, setBase64EncodedImage] = useState('')
   const [submitText, setSubmitText] = useState(<FaPlusCircle />)
+  const [cloudinary_public_id, setCloudinary_public_id] =useState('')
+  const [cloudinary_url, setCloudinary_url] =useState('')
   
   function handleFileInputChange(e){
     const file = e.target.files[0]
@@ -115,6 +117,8 @@ export default function App(){
       .catch(err=>console.log(err))
   }
   async function updateDinnerItem(formData){
+    console.log('************formData************')
+    console.log(...formData)
     await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
                                                       headers: {'Content-Type':'application/json'},
                                                       body: JSON.stringify({
@@ -124,6 +128,8 @@ export default function App(){
                                                         preDescription: formData.get('preDescription'),
                                                         description: formData.get('description'),
                                                         price: formData.get('price'),
+                                                        cloudinary_url: formData.get('cloudinary_url'),
+                                                        cloudinary_public_id: formData.get('cloudinary_public_id')
                                                       })
     })
       .then(console.log(`Updated: ${formData.get('name')}`))
@@ -132,7 +138,15 @@ export default function App(){
       .catch(err=>console.log(err))
   }
 
-  function updateForm(id,section,name,allergies,preDescription,description,price,cloudinary_url){
+  function updateForm(id,
+                      section,
+                      name,
+                      allergies,
+                      preDescription,
+                      description,
+                      price,
+                      cloudinary_url,
+                      cloudinary_public_id){
     setHiddenID(id)
     document.querySelector('#section').value = section
     document.querySelector('#name').value = name
@@ -142,6 +156,8 @@ export default function App(){
     document.querySelector('#price').value = price
     if(cloudinary_url) {
       setEditItemPhoto(cloudinary_url)
+      setCloudinary_url(cloudinary_url)
+      setCloudinary_public_id(cloudinary_public_id)
     }
     setEditForm(true)
     document.querySelector('#dinner-menu-form').scrollIntoView({behavior:'smooth'})
@@ -807,6 +823,9 @@ export default function App(){
 
 
         <input type='hidden' name='base64EncodedImage' value={previewSource} />
+
+        <input type='hidden' name='cloudinary_url' value={cloudinary_url} />
+        <input type='hidden' name='cloudinary_public_id' value={cloudinary_public_id} />
 
         {previewSource && <img src={previewSource}
                               alt='Image File Upload Preview'
