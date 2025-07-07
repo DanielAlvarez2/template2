@@ -79,9 +79,11 @@ export default function App(){
   useEffect(()=>getWhitespace(),[])
 
   async function addDinnerItem(formData){
-    let cloudinary_url = ''
-    let cloudinary_public_id = ''
+    setCloudinary_url('')
+    setCloudinary_public_id('')
     console.log(previewSource)
+
+
     if (previewSource){
       await fetch('/api/upload-cloudinary', { method:'POST',
         body:JSON.stringify({data:previewSource}),
@@ -92,8 +94,8 @@ export default function App(){
           await console.log(json)
           console.log('SECURE_URL: '+json.secure_url)
           console.log('PUBLIC_ID: '+json.public_id)
-          cloudinary_url = json.secure_url
-          cloudinary_public_id = json.public_id
+          setCloudinary_url(json.secure_url)
+          setCloudinary_public_id(json.public_id)
           })
           .catch(err=>console.log(err))
       console.log(...formData)
@@ -117,25 +119,67 @@ export default function App(){
       .catch(err=>console.log(err))
   }
   async function updateDinnerItem(formData){
-    console.log('************formData************')
+    console.log('************updateDinnerItem(formData)************')
     console.log(...formData)
-    await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
-                                                      headers: {'Content-Type':'application/json'},
-                                                      body: JSON.stringify({
-                                                        section: formData.get('section'),
-                                                        name: formData.get('name'),
-                                                        allergies: formData.get('allergies'),
-                                                        preDescription: formData.get('preDescription'),
-                                                        description: formData.get('description'),
-                                                        price: formData.get('price'),
-                                                        cloudinary_url: formData.get('cloudinary_url'),
-                                                        cloudinary_public_id: formData.get('cloudinary_public_id')
-                                                      })
-    })
-      .then(console.log(`Updated: ${formData.get('name')}`))
-      .then(setEditForm(false))
-      .then(async()=>await getDinnerItems())
-      .catch(err=>console.log(err))
+    
+    if(!formData.get(cloudinary_url) && !previewSource){
+      await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          section: formData.get('section'),
+          name: formData.get('name'),
+          allergies: formData.get('allergies'),
+          preDescription: formData.get('preDescription'),
+          description: formData.get('description'),
+          price: formData.get('price'),
+          cloudinary_url: formData.get('cloudinary_url'),
+          cloudinary_public_id: formData.get('cloudinary_public_id')
+        })
+      })
+        .then(console.log(`Updated: ${formData.get('name')}`))
+        .then(setEditForm(false))
+        .then(async()=>await getDinnerItems())
+        .catch(err=>console.log(err))
+      }
+      
+      if(!formData.get(cloudinary_url) && previewSource){
+        console.log('no photo -> add photo')
+        setCloudinary_url('')
+        setCloudinary_public_id('')
+        
+          await fetch('/api/upload-cloudinary', { method:'POST',
+            body:JSON.stringify({data:previewSource}),
+            headers:{'Content-type':'application/json'}
+          })
+              .then(async(res)=>await res.json())
+              .then(async(json)=>{
+                setCloudinary_url(json.secure_url)
+                setCloudinary_public_id(json.public_id)
+              })
+              .catch(err=>console.log(err))
+          setPreviewSource('')
+          console.log('***' + cloudinary_url)  
+          console.log('***' + cloudinary_public_id)  
+        await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
+                                    headers:{'Content-Type':'application/json'},
+                                    body: JSON.stringify({
+                                      section: formData.get('section'),
+                                      name: formData.get('name'),
+                                      allergies: formData.get('allergies'),
+                                      preDescription: formData.get('preDescription'),
+                                      description: formData.get('description'),
+                                      price: formData.get('price'),
+                                      cloudinary_url:cloudinary_url,
+                                      cloudinary_public_id:cloudinary_public_id
+                                    })
+        })
+          .then(console.log('Item Updated'))
+          .then(async ()=> await getDinnerItems())
+          .catch(err=>console.log(err))
+            
+      }    
+      
+  clearForm()
   }
 
   function updateForm(id,
@@ -215,6 +259,8 @@ export default function App(){
     document.querySelector('#pre-description').value = ''
     document.querySelector('#description').value = ''
     document.querySelector('#price').value = ''
+    setEditItemPhoto('')
+    setPreviewSource('')
   }
   function moveUp(id){
     fetch(`/api/dinner/up/${id}`,{method:'PUT',
@@ -796,6 +842,7 @@ export default function App(){
         {(editForm && editItemPhoto) && <>
                                           Current/Saved Image:<br/>
                                           <img  src={editItemPhoto} 
+                                                id='editItemPhoto'
                                                 height='300px' />
                                         </>} 
         {(editForm && !editItemPhoto) &&  <>

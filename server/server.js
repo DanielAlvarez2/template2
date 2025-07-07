@@ -20,7 +20,6 @@ app.use(express.urlencoded({limit:'50mb',extended:true}));
 })()
 app.post('/api/upload-cloudinary', async(req,res)=>{
     try{
-        console.log(req.body.data)
         const cloudinaryResponse = await cloudinary.uploader.upload(req.body.data)
         console.log(cloudinaryResponse)
         console.log(cloudinaryResponse.secure_url)
