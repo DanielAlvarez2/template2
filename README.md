@@ -10,7 +10,7 @@ express/server$ node --watch --env-file=../.env server.js (start express before 
 react$ npm run dev  
 click link to open browser  
 
-
+console.log(...formData)
 
 
 
