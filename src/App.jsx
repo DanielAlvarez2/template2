@@ -98,7 +98,6 @@ export default function App(){
           })
           .catch(err=>console.log(err))
       console.log(...formData)
-      setPreviewSource('')
     }
     await fetch('/api/dinner',{ method:'POST',
                                 headers:{'Content-Type':'application/json'},
@@ -169,17 +168,12 @@ export default function App(){
             .then(async(res)=>await res.json())
             .then(async(json)=>{
             await console.log(json)
-            console.log('SECURE_URL: '+json.secure_url)
-            console.log('PUBLIC_ID: '+json.public_id)
             cloudinary_assigned_url = json.secure_url
             cloudinary_assigned_public_id = json.public_id
             })
             .catch(err=>console.log(err))
         console.log(...formData)
         setPreviewSource('')
-
-        console.log('> '+cloudinary_assigned_url)
-        console.log('> '+cloudinary_assigned_public_id)
 
         await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
                                     headers:{'Content-Type':'application/json'},
@@ -199,7 +193,54 @@ export default function App(){
           .catch(err=>console.log(err))
             
       }    
+
       
+
+
+
+      if(formData.get(cloudinary_url) && previewSource){
+        console.log('has photo -> change photo')
+        await fetch(`/api/dinner/image/${formData.get(cloudinary_public_id)}`,{method:'DELETE'})
+          .then(console.log('Image Deleted'))
+          .catch(err=>console.log(err))
+
+          let cloudinary_assigned_url = ''
+          let cloudinary_assigned_public_id = ''
+          
+          await fetch('/api/upload-cloudinary', { method:'POST',
+            body:JSON.stringify({data:previewSource}),
+            headers:{'Content-type':'application/json'}
+          })
+              .then(async(res)=>await res.json())
+              .then(async(json)=>{
+              await console.log(json)
+              cloudinary_assigned_url = json.secure_url
+              cloudinary_assigned_public_id = json.public_id
+              })
+              .catch(err=>console.log(err))
+          console.log(...formData)
+          setPreviewSource('')
+  
+          await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
+                                      headers:{'Content-Type':'application/json'},
+                                      body: JSON.stringify({
+                                        section: formData.get('section'),
+                                        name: formData.get('name'),
+                                        allergies: formData.get('allergies'),
+                                        preDescription: formData.get('preDescription'),
+                                        description: formData.get('description'),
+                                        price: formData.get('price'),
+                                        cloudinary_url: cloudinary_assigned_url,
+                                        cloudinary_public_id: cloudinary_assigned_public_id
+                                      })
+          })
+            .then(console.log('Item Updated'))
+            .then(async ()=> await getDinnerItems())
+            .catch(err=>console.log(err))
+  
+      }
+
+
   clearForm()
   }
 
@@ -909,7 +950,8 @@ export default function App(){
               <div className='button-flexbox'><FaPlusCircle /> <span>Add Item</span></div>}
           </button><br/><br/>
 
-          <div  id='clear-button' style={{display:'inlineGrid',placeContent:'center'}}
+          <div  id='clear-button' 
+                style={{display:'inlineGrid',placeContent:'center'}}
                 onClick={clearForm}
                 className='btn'>
             <div  className='button-flexbox'>
