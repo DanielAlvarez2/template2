@@ -187,14 +187,14 @@ form{
   text-align: left;
   margin:20px 0 5vh;
 }
-button{
+button, .btn{
   cursor:pointer;
   width:92px;
   height:30px;
   border-radius: 15px;
   border:1px solid black;
 }
-button span{
+button span, .btn span{
   font-size: 13px;
 }
 #clear-button{

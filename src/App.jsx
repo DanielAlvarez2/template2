@@ -280,6 +280,7 @@ export default function App(){
     document.querySelector('#pre-description').value = ''
     document.querySelector('#description').value = ''
     document.querySelector('#price').value = ''
+    document.querySelector('#image-binary').value = ''
     setEditItemPhoto('')
     setPreviewSource('')
   }
@@ -900,20 +901,23 @@ export default function App(){
                               style={{height:'300px'}} />}
 
         <div id='buttons-wrapper'>
-        <button type='submit' 
-                style={editForm ? {background:'blue',color:'white'} : 
-                                  {background:'green',color:'white'}}>
-          {editForm?
-            <div className='button-flexbox'><VscSave /> <span>Save Changes</span></div> : 
-            <div className='button-flexbox'><FaPlusCircle /> <span>Add Item</span></div>}
-        </button><br/><br/>
+          <button type='submit' 
+                  style={editForm ? {background:'blue',color:'white'} : 
+                                    {background:'green',color:'white'}}>
+            {editForm?
+              <div className='button-flexbox'><VscSave /> <span>Save Changes</span></div> : 
+              <div className='button-flexbox'><FaPlusCircle /> <span>Add Item</span></div>}
+          </button><br/><br/>
 
-        <button id='clear-button' onClick={clearForm}>
-          <div className='button-flexbox'>
-            <MdClear /> <span>Clear Form</span>
-          </div>{/* .button-flexbox */}
-        </button>
+          <div  id='clear-button' 
+                onClick={clearForm}
+                className='btn'>
+            <div className='button-flexbox'>
+              <MdClear /> <span>Clear Form</span>
+            </div>{/* .button-flexbox */}
+          </div>
         </div>{/* #buttons-wrapper */}
+
       </form>
       </div>{/* dinner-menu-form-wrapper */}
 
