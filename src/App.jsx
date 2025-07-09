@@ -909,10 +909,10 @@ export default function App(){
               <div className='button-flexbox'><FaPlusCircle /> <span>Add Item</span></div>}
           </button><br/><br/>
 
-          <div  id='clear-button' 
+          <div  id='clear-button' style={{display:'inlineGrid',placeContent:'center'}}
                 onClick={clearForm}
                 className='btn'>
-            <div className='button-flexbox'>
+            <div  className='button-flexbox'>
               <MdClear /> <span>Clear Form</span>
             </div>{/* .button-flexbox */}
           </div>
