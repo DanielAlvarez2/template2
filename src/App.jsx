@@ -9,6 +9,7 @@ import { PiArrowFatUpFill } from "react-icons/pi"
 import { FaCamera } from "react-icons/fa"
 import { FaWindowClose } from "react-icons/fa"
 import { FaImage } from "react-icons/fa6"
+import { MdOutlineNotInterested } from "react-icons/md"
 
 export default function App(){
   const [editMode, setEditMode] = useState(true)
@@ -914,7 +915,18 @@ export default function App(){
                                                           alignItems:'center'}}>
                                               <span>No Photo Saved: </span><FaImage />
                                             </div><br/><br/>
-                                          </>}                                    
+                                          </>}      
+
+        {(editForm && editItemPhoto) && <>
+                                          <br/><br/>
+                                          <div style={{ display:'flex',
+                                                        gap:'5px',
+                                                        alignItems:'center'}}>
+                                            <MdOutlineNotInterested /> 
+                                            Display NO Photo: <input type='checkbox' /> 
+                                          </div><br/>
+                                        </>
+        }                              
 
         <label>
           <div style={{display:'flex',gap:'5px'}}>
