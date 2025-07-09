@@ -79,10 +79,9 @@ export default function App(){
   useEffect(()=>getWhitespace(),[])
 
   async function addDinnerItem(formData){
-    setCloudinary_url('')
-    setCloudinary_public_id('')
+    let cloudinary_assigned_url = ''
+    let cloudinary_assigned_public_id = ''
     console.log(previewSource)
-
 
     if (previewSource){
       await fetch('/api/upload-cloudinary', { method:'POST',
@@ -94,8 +93,8 @@ export default function App(){
           await console.log(json)
           console.log('SECURE_URL: '+json.secure_url)
           console.log('PUBLIC_ID: '+json.public_id)
-          setCloudinary_url(json.secure_url)
-          setCloudinary_public_id(json.public_id)
+          cloudinary_assigned_url = json.secure_url
+          cloudinary_assigned_public_id = json.public_id
           })
           .catch(err=>console.log(err))
       console.log(...formData)
@@ -110,18 +109,28 @@ export default function App(){
                                   preDescription: formData.get('preDescription'),
                                   description: formData.get('description'),
                                   price: formData.get('price'),
-                                  cloudinary_url:cloudinary_url,
-                                  cloudinary_public_id:cloudinary_public_id
+                                  cloudinary_url:cloudinary_assigned_url,
+                                  cloudinary_public_id:cloudinary_assigned_public_id
                                 })
     })
       .then(console.log('Added to Database'))
       .then(async ()=> await getDinnerItems())
       .catch(err=>console.log(err))
   }
+
+
+
+
+
+
   async function updateDinnerItem(formData){
     console.log('************updateDinnerItem(formData)************')
     console.log(...formData)
     
+
+
+
+
     if(!formData.get(cloudinary_url) && !previewSource){
       await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
         headers: {'Content-Type':'application/json'},
@@ -141,25 +150,36 @@ export default function App(){
         .then(async()=>await getDinnerItems())
         .catch(err=>console.log(err))
       }
+    
+      
+
+
+
       
       if(!formData.get(cloudinary_url) && previewSource){
         console.log('no photo -> add photo')
-        setCloudinary_url('')
-        setCloudinary_public_id('')
+        let cloudinary_assigned_url = ''
+        let cloudinary_assigned_public_id = ''
         
-          await fetch('/api/upload-cloudinary', { method:'POST',
-            body:JSON.stringify({data:previewSource}),
-            headers:{'Content-type':'application/json'}
-          })
-              .then(async(res)=>await res.json())
-              .then(async(json)=>{
-                setCloudinary_url(json.secure_url)
-                setCloudinary_public_id(json.public_id)
-              })
-              .catch(err=>console.log(err))
-          setPreviewSource('')
-          console.log('***' + cloudinary_url)  
-          console.log('***' + cloudinary_public_id)  
+        await fetch('/api/upload-cloudinary', { method:'POST',
+          body:JSON.stringify({data:previewSource}),
+          headers:{'Content-type':'application/json'}
+        })
+            .then(async(res)=>await res.json())
+            .then(async(json)=>{
+            await console.log(json)
+            console.log('SECURE_URL: '+json.secure_url)
+            console.log('PUBLIC_ID: '+json.public_id)
+            cloudinary_assigned_url = json.secure_url
+            cloudinary_assigned_public_id = json.public_id
+            })
+            .catch(err=>console.log(err))
+        console.log(...formData)
+        setPreviewSource('')
+
+        console.log('> '+cloudinary_assigned_url)
+        console.log('> '+cloudinary_assigned_public_id)
+
         await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
                                     headers:{'Content-Type':'application/json'},
                                     body: JSON.stringify({
@@ -169,8 +189,8 @@ export default function App(){
                                       preDescription: formData.get('preDescription'),
                                       description: formData.get('description'),
                                       price: formData.get('price'),
-                                      cloudinary_url:cloudinary_url,
-                                      cloudinary_public_id:cloudinary_public_id
+                                      cloudinary_url: cloudinary_assigned_url,
+                                      cloudinary_public_id: cloudinary_assigned_public_id
                                     })
         })
           .then(console.log('Item Updated'))

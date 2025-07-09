@@ -99,6 +99,8 @@ app.put('/api/dinner/:id', async(req,res)=>{
             preDescription:req.body.preDescription,
             description:req.body.description,
             price:req.body.price,
+            cloudinary_url: req.body.cloudinary_url,
+            cloudinary_public_id: req.body.cloudinary_public_id
         })
         console.log(`Updated in Database: ${req.body.name}`)
         res.json(`Updated in Database: ${req.body.name}`)
