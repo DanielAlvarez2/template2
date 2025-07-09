@@ -131,7 +131,8 @@ export default function App(){
 
 
 
-    if(!formData.get(cloudinary_url) && !previewSource){
+    if  ((!formData.get(cloudinary_url) && !previewSource) 
+      || ( formData.get(cloudinary_url) && !previewSource)){
       await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -155,7 +156,7 @@ export default function App(){
 
 
 
-      
+
       if(!formData.get(cloudinary_url) && previewSource){
         console.log('no photo -> add photo')
         let cloudinary_assigned_url = ''
