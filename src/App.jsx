@@ -22,6 +22,7 @@ export default function App(){
   const [submitText, setSubmitText] = useState(<FaPlusCircle />)
   const [cloudinary_public_id, setCloudinary_public_id] =useState('')
   const [cloudinary_url, setCloudinary_url] =useState('')
+  const [isChecked, setIsChecked]= useState(false)
   
   function handleFileInputChange(e){
     const file = e.target.files[0]
@@ -360,7 +361,9 @@ export default function App(){
   function hidePic(cloudinary_public_id){
     document.querySelector(`#${cloudinary_public_id}`).style.display = 'none'
   }
-
+  function toggleCheckbox(e){
+    setIsChecked(e.target.checked)
+  }
 
 
 
@@ -905,9 +908,22 @@ export default function App(){
 
         {(editForm && editItemPhoto) && <>
                                           Current/Saved Image:<br/>
-                                          <img  src={editItemPhoto} 
-                                                id='editItemPhoto'
-                                                height='300px' />
+                                          <div id='saved-image-wrapper' style={{position:'relative'}}>
+                                            <div id='no' style={{ position:'absolute',
+                                                                  width:'100%',
+                                                                  height:'100%',
+                                                                  display:'grid',
+                                                                  placeContent:'center'}}>
+                                                                    <MdOutlineNotInterested 
+                                                                      style={{color:isChecked ? 'red' : 'transparent',
+                                                                              fontSize:'150px'
+                                                                    }} />
+                                                                  </div>
+                                            <img  src={editItemPhoto} 
+                                                  id='editItemPhoto'
+                                                  height='300px' />
+                                          </div>{/* #saved-image-wrapper */}
+                                          
                                         </>} 
         {(editForm && !editItemPhoto) &&  <>
                                             <div style={{ display:'flex',
@@ -923,7 +939,10 @@ export default function App(){
                                                         gap:'5px',
                                                         alignItems:'center'}}>
                                             <MdOutlineNotInterested /> 
-                                            Display NO Photo: <input type='checkbox' /> 
+                                            Display NO Photo: 
+                                            <input  type='checkbox' 
+                                                    checked={isChecked} 
+                                                    onChange={toggleCheckbox} /> 
                                           </div><br/>
                                         </>
         }                              
