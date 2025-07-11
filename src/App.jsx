@@ -117,6 +117,8 @@ export default function App(){
       .then(console.log('Added to Database'))
       .then(async ()=> await getDinnerItems())
       .catch(err=>console.log(err))
+    
+    clearForm()
   }
 
 
@@ -239,11 +241,35 @@ export default function App(){
             .then(console.log('Item Updated'))
             .then(async ()=> await getDinnerItems())
             .catch(err=>console.log(err))
-  
+      }
+
+      if(formData.get('noPhotoCheckbox') && formData.get('cloudinary_url')){
+        await fetch(`/api/dinner/image/${formData.get(cloudinary_public_id)}`,{method:'DELETE'})
+        .then(console.log('Image Deleted'))
+        .catch(err=>console.log(err))
+
+        await fetch(`/api/dinner/${formData.get('id')}`,{ method:'PUT',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            section: formData.get('section'),
+            name: formData.get('name'),
+            allergies: formData.get('allergies'),
+            preDescription: formData.get('preDescription'),
+            description: formData.get('description'),
+            price: formData.get('price'),
+            cloudinary_url: '',
+            cloudinary_public_id: ''
+          })
+})
+.then(console.log('Item Updated'))
+.then(async ()=> await getDinnerItems())
+.catch(err=>console.log(err))
+
       }
 
 
   clearForm()
+  setEditForm(false)
   }
 
   function updateForm(id,
@@ -326,6 +352,8 @@ export default function App(){
     document.querySelector('#image-binary').value = ''
     setEditItemPhoto('')
     setPreviewSource('')
+    isChecked && toggleCheckbox()
+    getDinnerItems()
   }
   function moveUp(id){
     fetch(`/api/dinner/up/${id}`,{method:'PUT',
@@ -362,7 +390,8 @@ export default function App(){
     document.querySelector(`#${cloudinary_public_id}`).style.display = 'none'
   }
   function toggleCheckbox(e){
-    setIsChecked(e.target.checked)
+    document.querySelector('#preview-upload-wrapper').classList.toggle('hide') 
+    setIsChecked(prev=>!prev)
   }
 
 
@@ -942,35 +971,38 @@ export default function App(){
                                             Display NO Photo: 
                                             <input  type='checkbox' 
                                                     checked={isChecked} 
+                                                    name='noPhotoCheckbox'
                                                     onChange={toggleCheckbox} /> 
                                           </div><br/>
                                         </>
         }                              
 
-        <label>
-          <div style={{display:'flex',gap:'5px'}}>
-            <FaCamera />
-            <span>
-              {(editForm && editItemPhoto) && 'CHANGE '}
-              {(editForm && !editItemPhoto) && 'ADD '}
-              Photo: (optional)
-            </span>
-          </div>
-          <input  type='file'
-                  name='imageBinary'
-                  id='image-binary'
-                  onChange={handleFileInputChange} />
-        </label><br/><br/>
-
+        <div id='preview-upload-wrapper'>
+          <label>
+            <div style={{display:'flex',gap:'5px'}}>
+              <FaCamera />
+              <span>
+                {(editForm && editItemPhoto) && 'CHANGE '}
+                {(editForm && !editItemPhoto) && 'ADD '}
+                Photo: (optional)
+              </span>
+            </div>
+            <input  type='file'
+                    name='imageBinary'
+                    id='image-binary'
+                    onChange={handleFileInputChange} />
+          </label><br/><br/>
+          {previewSource && <img  src={previewSource}
+                                  id='preview-upload'
+                                  alt='Image File Upload Preview'
+                                  style={{height:'300px'}} />}
+        </div>{/* #preview-upload-wrapper */}
 
         <input type='hidden' name='base64EncodedImage' value={previewSource} />
 
         <input type='hidden' name='cloudinary_url' value={cloudinary_url} />
         <input type='hidden' name='cloudinary_public_id' value={cloudinary_public_id} />
 
-        {previewSource && <img src={previewSource}
-                              alt='Image File Upload Preview'
-                              style={{height:'300px'}} />}
 
         <div id='buttons-wrapper'>
           <button type='submit' 
