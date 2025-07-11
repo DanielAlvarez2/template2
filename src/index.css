@@ -34,6 +34,7 @@ h1{
 }
 .dinner-menu{
   background:white;
+  margin:0 auto;
   padding: 20px 40px;
   width:8.5in;
   height: auto;
@@ -97,7 +98,6 @@ hr{
   font-size: 14px;
 }
 .menu-controls{
-  width:8in;
   overflow: hidden;
   z-index:10;
   display:flex;
@@ -107,6 +107,8 @@ hr{
   justify-content: center;
   gap:2px;
   position: fixed;
+  top:0;
+  left:21.5%;
   background: white;
 }
 .whitespace-controls,
@@ -167,7 +169,7 @@ hr{
   font-family:serif;
 }
 #dinner-menu-form-wrapper{
-  width:8.5in;
+  width:100%;
   text-align: center;
   /* border:1px solid red; */
 }
@@ -215,7 +217,7 @@ button span, .btn span{
   gap:5px;
 }
 footer{
-  width:8.5in;
+  width:100%;
   text-align: center;
   font-size: 10px;
   font-family: sans-serif;
