@@ -13,8 +13,15 @@ click link to open browser
 console.log(...formData)
 
 
+during development:  
+togglesoftware.com/client-name  
 
+add page/template for printing paper invoices  
 
+render: 'togglesoftware failed' jimmy-rigged?  
+
+add functionality for staff to auto-email suggestions:  
+i.e. 'add mods button to cranberry juice'  
 
 
 
