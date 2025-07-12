@@ -425,6 +425,10 @@ export default function App(){
     <>
     <div className='wrapper'>
     <div className='wrapper-top'>
+
+
+    <div className='menu-controls-wrapper'>
+
     <div className='menu-controls no-print'>
       <div className='toggle-mode'>Edit Mode <MdOutlineToggleOff className='toggle-icon' onClick={flipSwitch} /> Print Preview</div> 
       <div className='whitespace-controls'> 
@@ -451,15 +455,15 @@ export default function App(){
         </span>{/* .horizontal-controls */}
 
       </div>{/* .whitespace-controls */}
-    </div>
+    </div>{/* .menu-controls */}
+
+    </div>{/* .menu-controls-wrapper */}
 
 
 
 
 
-
-
-    <div className='dinner-menu'>
+    <div className='dinner-menu' style={{width: !editMode ? '8.5in' : '', minWidth: editMode ? '8.5in' : ''}}>
     <h1>olea</h1>
     <hr/>
     

@@ -97,7 +97,15 @@ hr{
   font-weight: 900;
   font-size: 14px;
 }
+.menu-controls-wrapper{
+  width:100%;
+  text-align: center;
+  position: fixed;
+  background:transparent;
+  z-index:20;
+}
 .menu-controls{
+  margin:0 auto;
   overflow: hidden;
   z-index:10;
   display:flex;
@@ -106,9 +114,6 @@ hr{
   width:8.5in;
   justify-content: center;
   gap:2px;
-  position: fixed;
-  top:0;
-  left:21.5%;
   background: white;
 }
 .whitespace-controls,
