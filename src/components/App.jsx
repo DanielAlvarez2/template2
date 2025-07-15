@@ -430,7 +430,13 @@ export default function App(){
     <div className='menu-controls-wrapper'>
 
     <div className='menu-controls no-print'>
-      <div className='toggle-mode'>Edit Mode <MdOutlineToggleOff className='toggle-icon' onClick={flipSwitch} /> Print Preview</div> 
+      
+      <div className='toggle-mode'>
+        Edit Mode 
+        <MdOutlineToggleOff className='toggle-icon' onClick={flipSwitch} /> 
+        Print Preview
+      </div> 
+      
       <div className='whitespace-controls'> 
         
         <span className='vertical-controls'>
