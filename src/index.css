@@ -223,13 +223,13 @@ button span, .btn span{
   gap:5px;
 }
 footer{
-  width:100%;
+  width:8.5in;
   text-align: center;
   font-size: 10px;
   font-family: sans-serif;
   padding-top:30px;
   padding-bottom: 5px;
-  margin-top:auto;
+  margin:0 auto;
   
 }
 .trash-button,
@@ -290,4 +290,9 @@ footer{
   height:0;
   width:0;
   overflow:hidden;
+}
+.wrapper-bottom{
+  width:100%;
+  text-align: center;
+  margin-top:auto;
 }

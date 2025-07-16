@@ -1123,7 +1123,11 @@ export default function App(){
     </div>{/* edit-controls */}
     
     </div>{/* .wrapper-top */}
-    <footer className='no-print'>&copy;2025 powered by Toggle Software</footer>
+
+    <div id='wrapper-bottom'>
+      <footer className='no-print'>&copy;2025 powered by Toggle Software</footer>
+    </div>{/* .wrapper-bottom */}
+    
     </div>{/* .wrapper */}
     </>
   )
