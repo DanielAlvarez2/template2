@@ -219,7 +219,7 @@ app.put('/api/whitespace/vertical', async(req,res)=>{
 console.log('NODE: '+process.env.NODE_ENV)
 
 if (process.env.NODE_ENV == 'production'){
-    app.get('*',(req,res)=>res.sendFile('../dist/index.html')))
+    app.get('*',(req,res)=>res.sendFile('../dist/index.html'))
 }
 
 const PORT = process.env.PORT || 9991
