@@ -216,13 +216,14 @@ app.put('/api/whitespace/vertical', async(req,res)=>{
     }
 })
 
-console.log('NODE: '+process.env.NODE_ENV)
+console.log('NODE_ENV: '+process.env.NODE_ENV)
 console.log(path)
+console.log('PATH.DIRNAME: '+path.dirname)
 
 
-if (process.env.NODE_ENV == 'production'){
-    app.get('*',(req,res)=>res.sendFile('../dist/index.html'))
-}
+// if (process.env.NODE_ENV == 'production'){
+//     app.get('*',(req,res)=>res.sendFile('../dist/index.html'))
+// }
 
 const PORT = process.env.PORT || 9991
 app.listen(PORT, ()=> console.log(`Server Running on Port: ${PORT}`))
