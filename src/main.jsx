@@ -10,7 +10,7 @@ import Allergies from './components/Allergies.jsx'
 import Client from './Client.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />
@@ -18,5 +18,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='allergies' element={<Allergies />} />
       </Routes>
     </BrowserRouter>
-  </StrictMode>,
+  ,
 )
