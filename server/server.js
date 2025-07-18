@@ -223,7 +223,7 @@ console.log('PATH.RESOLVE(): '+path.resolve())
 
 
 if (process.env.NODE_ENV == 'production'){
-    app.get('*',(req,res)=>res.sendFile(path.join(path.resolve(),'client/dist','index.html')))
+    app.get('*',(req,res)=>res.sendFile(path.join(path.resolve(),'/dist','index.html')))
 }
 
 const PORT = process.env.PORT || 9991
