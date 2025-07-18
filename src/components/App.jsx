@@ -59,7 +59,6 @@ export default function App(){
       .then(()=>getDinnerItems())
       .catch(err=>console.log(err))
     clearForm()
-    setEditForm(false)
   }
   
   const [marginVertical, setMarginVertical] = useState(0)
@@ -269,7 +268,6 @@ export default function App(){
 
 
   clearForm()
-  setEditForm(false)
   }
 
   function updateForm(id,
@@ -354,6 +352,7 @@ export default function App(){
     setPreviewSource('')
     isChecked && toggleCheckbox()
     getDinnerItems()
+    setEditForm(false)
   }
   function moveUp(id){
     fetch(`/api/dinner/up/${id}`,{method:'PUT',
@@ -963,7 +962,7 @@ export default function App(){
                                                                   </div>
                                             <img  src={editItemPhoto} 
                                                   id='editItemPhoto'
-                                                  height='300px' />
+                                                  style={{maxWidth:'175px',maxHeight:'175px'}}/>
                                           </div>{/* #saved-image-wrapper */}
                                           
                                         </>} 
@@ -1008,7 +1007,7 @@ export default function App(){
           {previewSource && <img  src={previewSource}
                                   id='preview-upload'
                                   alt='Image File Upload Preview'
-                                  style={{height:'300px'}} />}
+                                  style={{maxHeight:'175px',maxWidth:'175px'}} />}
         </div>{/* #preview-upload-wrapper */}
 
         <input type='hidden' name='base64EncodedImage' value={previewSource} />

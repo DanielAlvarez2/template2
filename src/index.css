@@ -188,7 +188,7 @@ input[type='text']{
   width:35ch;
 }
 textarea{
-  width:100%;
+  width:35ch;
 }
 form{
   /* border:1px solid green; */
