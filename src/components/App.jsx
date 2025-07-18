@@ -894,6 +894,9 @@ export default function App(){
 
 
  <div className='edit-controls'>
+  
+  <div id='form-wrapper-outer'>
+
   <div id='dinner-menu-form-wrapper'>
   <form action={editForm?updateDinnerItem:addDinnerItem} id='dinner-menu-form'>
       {editForm ? <h2>Edit Item</h2> : <h2>Create New Item</h2>}
@@ -1036,7 +1039,7 @@ export default function App(){
       </form>
       </div>{/* dinner-menu-form-wrapper */}
 
-
+    </div>{/* #form-wrapper-outer */}
 
 
 
