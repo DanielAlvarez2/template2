@@ -219,6 +219,7 @@ app.put('/api/whitespace/vertical', async(req,res)=>{
 console.log('NODE_ENV: '+process.env.NODE_ENV)
 console.log(path)
 console.log('PATH.DIRNAME: '+path.dirname)
+console.log('PATH.RESOLVE(): '+path.resolve())
 
 
 // if (process.env.NODE_ENV == 'production'){
