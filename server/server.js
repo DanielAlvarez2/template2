@@ -221,10 +221,9 @@ console.log(path)
 console.log('PATH.DIRNAME: '+path.dirname)
 console.log('PATH.RESOLVE(): '+path.resolve())
 
-
-// if (process.env.NODE_ENV == 'production'){
-//     app.get('*',(req,res)=>res.sendFile(path.join(path.resolve(),'index.html')))
-// }
+if (process.env.NODE_ENV == 'production'){
+    app.get('*',(req,res)=>res.sendFile('index.html'))
+}
 
 const PORT = process.env.PORT || 9991
 app.listen(PORT, ()=> console.log(`Server Running on Port: ${PORT}`))
