@@ -6,8 +6,8 @@ const Pixel = require('./models/Pixel.js')
 const {cloudinary} = require('./utils/cloudinary.js') 
 
 const app = express()
-// app.use(express.static('../dist'))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static('../dist'))
+// app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json({limit:'50mb'}))
 app.use(express.urlencoded({limit:'50mb',extended:true}));
 
@@ -222,9 +222,9 @@ console.log(path)
 console.log('PATH.DIRNAME: '+path.dirname)
 console.log('PATH.RESOLVE(): '+path.resolve())
 
-if (process.env.NODE_ENV == 'production'){
-    app.get('*',(req,res)=>res.sendFile(path.join(__dirname, 'public', 'index.html')))
-}
+// if (process.env.NODE_ENV == 'production'){
+//     app.get('*',(req,res)=>res.sendFile(path.join(__dirname, 'public', 'index.html')))
+// }
 
 const PORT = process.env.PORT || 9991
 app.listen(PORT, ()=> console.log(`Server Running on Port: ${PORT}`))
